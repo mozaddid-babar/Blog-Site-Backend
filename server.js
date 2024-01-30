@@ -1,15 +1,26 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
+const fs = require('fs');
 
 const app = express();
 const PORT = 8080;
 
 // middleware
 app.use(bodyParser.json());
+app.use(cors());
 
-// Sample in-memory data for blogs and comments
-let blogs = [];
-let comments = [];
+// Reading data
+const jsonData = fs.readFileSync('data.json', 'utf8');
+const { blogs: initialBlogs, comments: initialComments } = JSON.parse(jsonData);
+
+// Initialize blogs and comments arrays
+let blogs = initialBlogs;
+let comments = initialComments;
+
+app.get('/', (req, res) => {
+    res.send('Blog Server is Running');
+});
 
 // Create Blog
 app.post('/blogs', (req, res) => {
@@ -72,6 +83,42 @@ app.get('/comments/:blogId', (req, res) => {
     res.json(blogComments);
 });
 
+// Get Favorite Blogs for a User
+app.get('/users/:userId/favorites', (req, res) => {
+    const userId = parseInt(req.params.userId);
+    const user = users.find(user => user.id === userId);
+
+    if (user) {
+        const favoriteBlogs = blogs.filter(blog => user.favorites.includes(blog.id));
+        res.json(favoriteBlogs);
+    } else {
+        res.status(404).json({ message: 'User not found' });
+    }
+});
+
+// Toggle Blog as Favorite for a User
+app.put('/users/:userId/favorites/:blogId', (req, res) => {
+    const userId = parseInt(req.params.userId);
+    const blogId = parseInt(req.params.blogId);
+    const user = users.find(user => user.id === userId);
+
+    if (user) {
+        const index = user.favorites.indexOf(blogId);
+
+        if (index === -1) {
+            // Blog is not in favorites, add it
+            user.favorites.push(blogId);
+        } else {
+            // Blog is in favorites, remove it
+            user.favorites.splice(index, 1);
+        }
+
+        res.json({ favorites: user.favorites });
+    } else {
+        res.status(404).json({ message: 'User not found' });
+    }
+});
+
 app.listen(PORT, () => {
-    console.log(`App is listening on ${PORT}`);
-})
+    console.log(`App is listening on http://localhost:${PORT}`);
+});
