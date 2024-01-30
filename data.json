@@ -1,0 +1,59 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "favorites": [1, 2]
+    }
+  ],
+  "blogs": [
+    {
+      "userId": 1,
+      "id": 1,
+      "title": "First Blog Post",
+      "body": "This is the body of the first blog post. This is brand new. It is made for practice purposes and so it might not be a perfect example blog post. So please be sure not to be disheartened about this blog post"
+    },
+    {
+      "userId": 1,
+      "id": 2,
+      "title": "Second Blog Post",
+      "body": "This is the body of the second blog post. This is brand new. It is made for practice purposes and so it might not be a perfect example blog post. So please be sure not to be disheartened about this blog post"
+    },
+    {
+      "userId": 2,
+      "id": 3,
+      "title": "Another Blog Post",
+      "body": "This is another blog post by a different user. This is brand new. It is made for practice purposes and so it might not be a perfect example blog post. So please be sure not to be disheartened about this blog post"
+    }
+  ],
+  "comments": [
+    {
+      "blogId": 1,
+      "id": 1,
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "body": "Great post! Thanks for sharing."
+    },
+    {
+      "blogId": 1,
+      "id": 2,
+      "name": "Jane Smith",
+      "email": "jane.smith@example.com",
+      "body": "I enjoyed reading your thoughts."
+    },
+    {
+      "blogId": 2,
+      "id": 3,
+      "name": "Alice Johnson",
+      "email": "alice.johnson@example.com",
+      "body": "Looking forward to more posts!"
+    },
+    {
+      "blogId": 3,
+      "id": 4,
+      "name": "Bob Brown",
+      "email": "bob.brown@example.com",
+      "body": "Interesting perspective on the topic."
+    }
+  ]
+}
